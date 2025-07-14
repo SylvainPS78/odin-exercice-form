@@ -1,65 +1,82 @@
-const emailInput = document.getElementById("email");
-const countryInput = document.getElementById("country");
-const postcodeInput = document.getElementById("postcode");
-const passwordInput = document.getElementById("password");
-const confirmPasswordInput = document.getElementById("confirm-password");
+const formElements = {
+  email: document.getElementById("email"),
+  country: document.getElementById("country"),
+  postcode: document.getElementById("postcode"),
+  password: document.getElementById("password"),
+  confirmPassword: document.getElementById("confirm-password"),
+};
 
-const emailRegex = /^[^\s@]+@[a-zA-Z]+\.[a-zA-Z]+$/;
-const postcodeRegex = /^\d{5,}$/;
-const passwordRegex =
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/;
+const validationRules = {
+  email: /^[^\s@]+@[a-zA-Z]+\.[a-zA-Z]+$/,
+  postcode: /^\d{5,}$/,
+  password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/,
+};
 
-emailInput.addEventListener("input", () => {
-  if (emailRegex.test(emailInput.value) === false) {
-    emailInput.setCustomValidity("I am expecting an email address!");
+const errorMessages = {
+  email: "Please enter a valid email address",
+  country: "Country name must be at least 4 characters long",
+  postcode: "Post code must be at least 5 numbers long",
+  password:
+    "Password must contain at least 8 characters, including uppercase, lowercase, a number and special characters",
+  passwordMismatch: "Passwords must match",
+};
+
+const validateInput = (input, rule, message) => {
+  if (!rule.test(input.value)) {
+    input.setCustomValidity(message);
   } else {
-    emailInput.setCustomValidity("");
+    input.setCustomValidity("");
   }
-  emailInput.reportValidity();
-});
+  input.reportValidity();
+};
 
-countryInput.addEventListener("input", () => {
-  if (countryInput.validity.tooShort) {
-    countryInput.setCustomValidity(
-      "Country name must be at least 4 characters long."
+const validateCountry = (input) => {
+  if (input.validity.tooShort) {
+    input.setCustomValidity(errorMessages.country);
+  } else {
+    input.setCustomValidity("");
+  }
+  input.reportValidity();
+};
+
+const validateConfirmPassword = (input, passwordInput) => {
+  if (!validationRules.password.test(input.value)) {
+    input.setCustomValidity(
+      `${errorMessages.password}\n${errorMessages.passwordMismatch}`
     );
+  } else if (input.value !== passwordInput.value) {
+    input.setCustomValidity(errorMessages.passwordMismatch);
   } else {
-    countryInput.setCustomValidity("");
+    input.setCustomValidity("");
   }
-  countryInput.reportValidity();
-});
+  input.reportValidity();
+};
 
-postcodeInput.addEventListener("input", () => {
-  if (postcodeRegex.test(postcodeInput.value) === false) {
-    postcodeInput.setCustomValidity(
-      "Poste code must be at least 5 numbers long."
-    );
-  } else {
-    postcodeInput.setCustomValidity("");
-  }
-  postcodeInput.reportValidity();
-});
+// Event Listeners
+formElements.email.addEventListener("input", () =>
+  validateInput(formElements.email, validationRules.email, errorMessages.email)
+);
 
-passwordInput.addEventListener("input", () => {
-  if (passwordRegex.test(passwordInput.value) === false) {
-    passwordInput.setCustomValidity(
-      "Password must contain at least 8 characters, including uppercase, lowercase, a number and special characters"
-    );
-  } else {
-    passwordInput.setCustomValidity("");
-  }
-  passwordInput.reportValidity();
-});
+formElements.country.addEventListener("input", () =>
+  validateCountry(formElements.country)
+);
 
-confirmPasswordInput.addEventListener("input", () => {
-  if (passwordRegex.test(confirmPasswordInput.value) === false) {
-    confirmPasswordInput.setCustomValidity(
-      "Password must contain at least 8 characters, including uppercase, lowercase, a number and special characters.\nPasswords must match."
-    );
-  } else if (confirmPasswordInput.value !== passwordInput.value) {
-    confirmPasswordInput.setCustomValidity("Passwords must match.");
-  } else {
-    confirmPasswordInput.setCustomValidity("");
-  }
-  confirmPasswordInput.reportValidity();
-});
+formElements.postcode.addEventListener("input", () =>
+  validateInput(
+    formElements.postcode,
+    validationRules.postcode,
+    errorMessages.postcode
+  )
+);
+
+formElements.password.addEventListener("input", () =>
+  validateInput(
+    formElements.password,
+    validationRules.password,
+    errorMessages.password
+  )
+);
+
+formElements.confirmPassword.addEventListener("input", () =>
+  validateConfirmPassword(formElements.confirmPassword, formElements.password)
+);
