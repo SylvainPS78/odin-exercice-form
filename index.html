@@ -19,46 +19,71 @@
       <form class="form" novalidate aria-label="Registration form">
         <fieldset class="form__fieldset">
           <legend class="form__legend">Personal Information</legend>
-          <label class="form__label" for="email">Email :</label>
+
+          <label class="form__label" for="email" id="email-label"
+            >Email :</label
+          >
           <input
             class="form__input"
             type="email"
             id="email"
             name="email"
+            placeholder="Enter your email"
             autocomplete="email"
             spellcheck="false"
             required
+            aria-required="true"
+            aria-labelledby="email-label"
           />
-          <label class="form__label" for="country">Country :</label>
+          <label class="form__label" for="country" id="country-label"
+            >Country :</label
+          >
           <input
             class="form__input"
             type="text"
             id="country"
             name="country"
+            placeholder="Enter your country"
+            autocomplete="country"
             spellcheck="true"
             minlength="4"
             required
+            aria-required="true"
+            aria-labelledby="country-label"
           />
-          <label class="form__label" for="postcode">Postal Code :</label>
+          <label class="form__label" for="postcode" id="postcode-label"
+            >Postal Code :</label
+          >
           <input
             class="form__input"
             type="text"
             id="postcode"
             name="postcode"
+            placeholder="Enter your postal code"
             autocomplete="postal-code"
             minlength="5"
             required
+            aria-required="true"
+            aria-labelledby="postcode-label"
           />
-          <label class="form__label" for="password">Password :</label>
+          <label class="form__label" for="password" id="password-label"
+            >Password :</label
+          >
           <input
             class="form__input"
             type="password"
             id="password"
             name="password"
+            placeholder="Enter your password"
             autocomplete="off"
             required
+            aria-required="true"
+            aria-labelledby="password-label"
           />
-          <label class="form__label" for="confirm-password"
+          <label
+            class="form__label"
+            for="confirm-password"
+            id="confirm-password-label"
             >Confirm Password :</label
           >
           <input
@@ -66,8 +91,11 @@
             type="password"
             id="confirm-password"
             name="confirm-password"
+            placeholder="Confirm your password"
             autocomplete="off"
             required
+            aria-required="true"
+            aria-labelledby="confirm-password-label"
           />
 
           <button
