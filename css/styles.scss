@@ -122,21 +122,34 @@ main {
   min-height: 100vh;
 }
 
-fieldset {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
+// ==============================================
+// Components
+// ==============================================
+.form {
+  width: 60vw;
   max-width: 600px;
   padding: $spacing-lg;
-  background-color: $light-primary-blue;
-  border-radius: 8px;
-  box-shadow: 0 8px 12px rgba(36, 41, 64, 0.5);
-  gap: 1vh;
-  border: 2px solid $dark-grey;
 
-  & legend {
+  &__fieldset {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: $light-primary-blue;
+    border-radius: 8px;
+    box-shadow: 0 8px 12px rgba($dark-grey, 0.5);
+    gap: 1vh;
+    border: 2px solid $dark-grey;
+    padding: $spacing-md;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 16px rgba($dark-grey, 0.6);
+    }
+  }
+
+  &__legend {
     font-size: $font-size-small;
     background-color: $light-primary-blue;
     color: $dark-grey;
@@ -145,25 +158,37 @@ fieldset {
     border: 2px solid $dark-grey;
     padding: 0.1rem 0.3rem;
     border-radius: 5px;
+    box-shadow: 0 2px 4px rgba($dark-grey, 0.3);
   }
-}
 
-input {
-  border: 2px solid $dark-grey;
-  border-radius: 5px;
-  padding: 0.5rem;
+  &__input {
+    border: 2px solid $dark-grey;
+    border-radius: 5px;
+    padding: 0.5rem;
+    width: 100%;
+    transition: all 0.3s ease;
+    background-color: $white;
 
-  &:focus {
-    outline: none;
-    border-color: $primary-blue;
+    &:focus {
+      outline: none;
+      border-color: $primary-blue;
+      box-shadow: 0 0 5px rgba($primary-blue, 0.5);
+    }
+
+    &::placeholder {
+      color: $medium-grey;
+      opacity: 0.8;
+    }
   }
-}
 
-label {
-  font-size: $font-size-small;
-  color: $dark-grey;
-  text-decoration: underline;
-  font-weight: bold;
+  &__label {
+    font-size: $font-size-small;
+    color: $dark-grey;
+    text-decoration: underline;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    align-self: flex-start;
+  }
 }
 
 .submit-button {
@@ -171,21 +196,35 @@ label {
   color: $white;
   border: none;
   border-radius: 5px;
-  padding: 0.5rem 1rem;
+  padding: 0.8rem 1.5rem;
   font-size: $font-size-small;
   cursor: pointer;
   transition: all 0.3s ease;
+  margin-top: $spacing-md;
+  width: 80%;
+  letter-spacing: 1px;
+  text-transform: uppercase;
 
   &:hover,
   &:focus {
     background-color: $primary-blue;
     font-weight: bold;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba($dark-grey, 0.3);
   }
 
   &:active {
     background-color: $accent-red;
     color: $white;
     font-weight: bold;
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    background-color: $medium-grey;
+    cursor: not-allowed;
+    transform: none;
+    opacity: 0.7;
   }
 }
 
@@ -193,7 +232,6 @@ label {
 // Footer
 // ==============================================
 footer {
-  // ADD TO TEMPLATE !
   color: $light-grey;
   text-align: center;
   position: fixed;
