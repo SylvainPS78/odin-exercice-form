@@ -10,7 +10,7 @@ $white: #ffffff;
 $black: #000000;
 $light-grey: #f0f0f0;
 $medium-grey: #9194a2;
-$dark-grey: #242940;
+$dark-grey: rgb(36, 41, 64);
 
 // Typography
 $font-body: "Montserrat", Arial, sans-serif;
@@ -110,6 +110,71 @@ button,
 textarea,
 select {
   font: inherit;
+}
+// ==============================================
+// Main
+// ==============================================
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 600px;
+  padding: $spacing-md;
+  background-color: $light-primary-blue;
+  border-radius: 8px;
+  box-shadow: 0 8px 12px rgba(36, 41, 64, 0.5);
+  gap: 1vh;
+}
+
+input {
+  border: 2px solid $dark-grey;
+  border-radius: 5px;
+  padding: 0.5rem;
+
+  &:focus {
+    outline: none;
+    border-color: $primary-blue;
+  }
+}
+
+label {
+  font-size: $font-size-small;
+  color: $dark-grey;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.submit-button {
+  background-color: $dark-grey;
+  color: $white;
+  border: none;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  font-size: $font-size-small;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover,
+  &:focus {
+    background-color: $primary-blue;
+    font-weight: bold;
+  }
+
+  &:active {
+    background-color: $accent-red;
+    color: $white;
+    font-weight: bold;
+  }
 }
 
 // ==============================================
