@@ -11,6 +11,7 @@ $black: #000000;
 $light-grey: #f0f0f0;
 $medium-grey: #9194a2;
 $dark-grey: rgb(36, 41, 64);
+$green: #238a3b;
 
 // Typography
 $font-body: "Montserrat", Arial, sans-serif;
@@ -178,6 +179,13 @@ main {
     &::placeholder {
       color: $medium-grey;
       opacity: 0.8;
+    }
+
+    &:valid {
+      border-color: $green;
+    }
+    &:user-invalid {
+      border-color: $accent-red;
     }
   }
 

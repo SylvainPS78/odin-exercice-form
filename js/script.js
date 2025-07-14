@@ -4,6 +4,7 @@ const formElements = {
   postcode: document.getElementById("postcode"),
   password: document.getElementById("password"),
   confirmPassword: document.getElementById("confirm-password"),
+  submitButton: document.getElementById("submit-button"),
 };
 
 const validationRules = {
@@ -22,34 +23,36 @@ const errorMessages = {
 };
 
 const validateInput = (input, rule, message) => {
-  if (!rule.test(input.value)) {
-    input.setCustomValidity(message);
-  } else {
-    input.setCustomValidity("");
-  }
+  const isValid = rule.test(input.value);
+  input.setCustomValidity(isValid ? "" : message);
   input.reportValidity();
+  return isValid;
 };
 
 const validateCountry = (input) => {
-  if (input.validity.tooShort) {
-    input.setCustomValidity(errorMessages.country);
-  } else {
-    input.setCustomValidity("");
-  }
+  const isValid = !input.validity.tooShort;
+  input.setCustomValidity(isValid ? "" : errorMessages.country);
   input.reportValidity();
+  return isValid;
 };
 
 const validateConfirmPassword = (input, passwordInput) => {
+  let isValid = true;
+
   if (!validationRules.password.test(input.value)) {
     input.setCustomValidity(
       `${errorMessages.password}\n${errorMessages.passwordMismatch}`
     );
+    isValid = false;
   } else if (input.value !== passwordInput.value) {
     input.setCustomValidity(errorMessages.passwordMismatch);
+    isValid = false;
   } else {
     input.setCustomValidity("");
   }
+
   input.reportValidity();
+  return isValid;
 };
 
 // Event Listeners
@@ -80,3 +83,38 @@ formElements.password.addEventListener("input", () =>
 formElements.confirmPassword.addEventListener("input", () =>
   validateConfirmPassword(formElements.confirmPassword, formElements.password)
 );
+
+formElements.submitButton.addEventListener("click", (event) => {
+  event.preventDefault();
+  if (
+    formElements.email.validity.valid &&
+    formElements.country.validity.valid &&
+    formElements.postcode.validity.valid &&
+    formElements.password.validity.valid &&
+    formElements.confirmPassword.validity.valid
+  ) {
+    alert("Form submitted successfully!");
+  } else {
+    alert("Please correct the errors in the form before submitting.");
+  }
+});
+
+const validateForm = () => {
+  const isValid =
+    formElements.email.validity.valid &&
+    formElements.country.validity.valid &&
+    formElements.postcode.validity.valid &&
+    formElements.password.validity.valid &&
+    formElements.confirmPassword.validity.valid;
+
+  formElements.submitButton.disabled = !isValid;
+  formElements.submitButton.setAttribute("aria-disabled", !isValid);
+};
+
+Object.keys(formElements).forEach((key) => {
+  if (key !== "submitButton") {
+    formElements[key].addEventListener("input", validateForm);
+  }
+});
+formElements.submitButton.disabled = true;
+formElements.submitButton.setAttribute("aria-disabled", true);
